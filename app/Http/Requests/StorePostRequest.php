@@ -31,6 +31,14 @@ class StorePostRequest extends FormRequest
             'title' => 'required',
         ];
     }
+    public function messages()
+    {
+        return [
+            'name.required' => 'Trường name phải nhập vào',
+            'title.required' => 'Trường title phải nhập vào ',
+            'name.min' => 'Trường name có ít nhất 5 ký tự',
+        ];
+    }
 
     protected function failedValidation(Validator $validator)
     {

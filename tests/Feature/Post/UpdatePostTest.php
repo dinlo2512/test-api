@@ -44,8 +44,8 @@ class UpdatePostTest extends TestCase
             'name' => '',
             'title' => $this->faker->text,
         ];
-
         $response = $this->putJson(route('post.update', $post->id), $dataUpdate);
+
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertJson(fn (AssertableJson  $json) =>
             $json->has('error', fn (AssertableJson  $json) =>
@@ -63,8 +63,8 @@ class UpdatePostTest extends TestCase
             'name' => $this->faker->name,
             'title' => '',
         ];
-
         $response = $this->putJson(route('post.update', $post->id), $dataUpdate);
+
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertJson(fn (AssertableJson  $json) =>
         $json->has('error', fn (AssertableJson  $json) =>

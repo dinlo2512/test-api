@@ -16,7 +16,6 @@ class GetPostTest extends TestCase
     public function user_can_get_post_if_exists()
     {
         $post = Post::factory()->create();
-
         $response = $this->getJson(route('post.show', $post->id));
 
         $response->assertStatus(Response::HTTP_OK);
@@ -25,7 +24,6 @@ class GetPostTest extends TestCase
                 $json->where('name', $post->name)
                 ->etc()
             )
-            ->has('message')
         );
     }
 

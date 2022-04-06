@@ -17,10 +17,9 @@ class CreatePostTest extends TestCase
             'name' => $this->faker->name,
             'title' => $this->faker->text,
         ];
-
         $respone = $this->json('POST', route('post.store', $dataCreate));
-        $respone->assertStatus(Response::HTTP_OK);
 
+        $respone->assertStatus(Response::HTTP_OK);
         $respone->assertJson(fn (AssertableJson $json)=>
             $json->has('data', fn (AssertableJson $json) =>
                 $json->where('name', $dataCreate['name'])
@@ -82,16 +81,30 @@ class CreatePostTest extends TestCase
             'name' => '',
             'title' => '',
         ];
-
         $respone = $this->postJson(route('post.store'), $dataCreate);
-        $respone->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
 
+        $respone->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $respone->assertJson(fn (AssertableJson $json) =>
         $json->has('error', fn (AssertableJson $json) =>
         $json->has('title')
             ->has('name')
         )->etc()
         );
+    }
+    /** @test */
+    public function user_can_not_create_if_name_invalid()
+    {
+        $dataCreate = [
+            'name' => 'asc',
+            'title' => $this->faker->text,
+        ];
+        $respone = $this->postJson(route('post.store'), $dataCreate);
 
+        $respone->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $respone->assertJson(fn (AssertableJson $json) =>
+        $json->has('error', fn (AssertableJson $json) =>
+        $json->has('name')
+        )->etc()
+        );
     }
 }

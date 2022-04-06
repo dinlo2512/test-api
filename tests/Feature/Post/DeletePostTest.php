@@ -17,6 +17,7 @@ class DeletePostTest extends TestCase
         $post = Post::factory()->create();
         $countBefore = Post::count();
         $response = $this->deleteJson(route('post.destroy', $post->id));
+
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(fn(AssertableJson $json) =>
             $json->has('message')
@@ -30,8 +31,8 @@ class DeletePostTest extends TestCase
     public function user_can_delete_if_id_invalid()
     {
         $postId = -1;
-
         $response = $this->deleteJson(route('post.destroy', $postId));
+
         $response->assertStatus(Response::HTTP_NOT_FOUND);
         $response->assertJson(fn(AssertableJson $json) => $json->has('message')
             ->etc()

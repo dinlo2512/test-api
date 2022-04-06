@@ -32,6 +32,15 @@ class CrearePostRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'name.required' => 'trường name phải nhập',
+            'title.required' => 'trường title phải nhập',
+            'name.min' => 'trường name phải có ít nhất 5 ký tự',
+        ];
+    }
+
     protected function failedValidation(Validator $validator)
     {
         $reponse = new Response([

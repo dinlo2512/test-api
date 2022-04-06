@@ -18,8 +18,8 @@ class GetListPostTest extends TestCase
     {
         $total = Post::count();
         $response = $this->getJson(route('post.index'));
-        $response->assertStatus(Response::HTTP_OK);
 
+        $response->assertStatus(Response::HTTP_OK);
         $response->assertJson(fn (AssertableJson $json) =>
             $json->has('data', fn (AssertableJson $json) =>
                 $json->has('data')
@@ -28,9 +28,7 @@ class GetListPostTest extends TestCase
                         ->etc()
                     )
             )
-            ->has('message')
+            ->etc()
         );
     }
-
-
 }
